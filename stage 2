@@ -1,0 +1,42 @@
+import RPi.GPIO as GPIO
+import time
+
+# Define the GPIO pins for motor control
+# Replace these pin numbers with your actual connections
+pin_U = 17  # Phase U
+pin_V = 18  # Phase V
+pin_W = 19  # Phase W
+
+# Initialize the GPIO settings
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(pin_U, GPIO.OUT)
+GPIO.setup(pin_V, GPIO.OUT)
+GPIO.setup(pin_W, GPIO.OUT)
+
+# Function to start the motor
+def start_motor():
+    # Set the motor phases to start the motor
+    GPIO.output(pin_U, GPIO.HIGH)
+    GPIO.output(pin_V, GPIO.LOW)
+    GPIO.output(pin_W, GPIO.LOW)
+    time.sleep(2)  # Run the motor for 2 seconds
+
+# Function to stop the motor
+def stop_motor():
+    # Set all phases to LOW to stop the motor
+    GPIO.output(pin_U, GPIO.LOW)
+    GPIO.output(pin_V, GPIO.LOW)
+    GPIO.output(pin_W, GPIO.LOW)
+
+# Main program
+try:
+    start_motor()  # Start the motor
+    time.sleep(5)  # Run the motor for 5 seconds
+    stop_motor()   # Stop the motor
+
+except KeyboardInterrupt:
+    stop_motor()   # Stop the motor if the program is interrupted
+
+finally:
+    GPIO.cleanup()  # Cleanup GPIO settings
+
